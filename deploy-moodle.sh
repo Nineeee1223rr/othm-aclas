@@ -1,13 +1,11 @@
 #!/bin/bash
 # ============================================================
-# Moodle LMS 部署脚本 for learn.aclas.global
-# 在 VPS 上以 root 身份运行: bash deploy.sh
+# Moodle 5.2.1 部署 for learn.aclas.global (AlmaLinux 8)
 # ============================================================
 set -e
 
-# ---- 配置 (可修改) ----
-MOODLE_SITE="ACLAS Global LMS"
 MOODLE_HOST="learn.aclas.global"
+MOODLE_SITE="ACLAS Global LMS"
 MOODLE_ADMIN="aclasadmin"
 MOODLE_ADMIN_EMAIL="admin@aclas.global"
 MOODLE_ADMIN_PASS="KbKgrXEayVd1EW3D"
@@ -15,265 +13,184 @@ DB_ROOT_PASS="vSBoY35wWRRWIRNfsLnB"
 DB_MOODLE_PASS="88XtDtnlHW48JTx9SNVR"
 
 echo "========================================"
-echo " ACLAS Moodle Deployment"
+echo " ACLAS Moodle 5.2 Deployment"
 echo " Site: ${MOODLE_HOST}"
 echo "========================================"
 
-# ---- 1. 安装 Docker（如果没有） ----
-echo ""
-echo "[1/7] Installing Docker if needed..."
-if ! command -v docker &> /dev/null; then
-    apt-get update -qq && apt-get install -y -qq ca-certificates curl
-    install -m 0755 -d /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    chmod a+r /etc/apt/keyrings/docker.asc
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-    apt-get update -qq && apt-get install -y -qq docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    systemctl enable docker --now
-    echo "  Docker installed."
-else
-    echo "  Docker already installed."
-fi
-
-# ---- 2. 清理旧环境 ----
-echo ""
-echo "[2/7] Cleaning old environment..."
+# ---- 1. Stop any old stuff ----
+echo "[1] Stopping old services..."
+systemctl stop httpd nginx 2>/dev/null || true
 docker stop $(docker ps -aq) 2>/dev/null || true
-docker rm $(docker ps -aq) 2>/dev/null || true
-docker system prune -af 2>/dev/null || true
+docker rm -f $(docker ps -aq) 2>/dev/null || true
 rm -rf /opt/moodle 2>/dev/null || true
+mkdir -p /opt/moodle/{db,moodledata}
 echo "  Done."
 
-# ---- 2. 创建目录结构 ----
-echo ""
-echo "[2/6] Creating directories..."
-mkdir -p /opt/moodle/{mariadb,moodle,moodledata,redis}
-chmod -R 777 /opt/moodle/moodledata
-echo "  Done."
-
-# ---- 3. Docker Compose ----
-echo ""
-echo "[3/7] Writing docker-compose.yml..."
+# ---- 2. Docker Compose ----
+echo "[2] Creating docker-compose.yml..."
 cat > /opt/moodle/docker-compose.yml << 'DOCKEREOF'
-version: '3.8'
-
 services:
-  mariadb:
-    image: bitnami/mariadb:11.4
+  db:
+    image: mariadb:10.6
     container_name: moodle-db
     restart: unless-stopped
     environment:
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS}
-      MARIADB_DATABASE: bitnami_moodle
-      MARIADB_USER: bn_moodle
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodleuser
       MARIADB_PASSWORD: ${DB_MOODLE_PASS}
     volumes:
-      - ./mariadb:/bitnami/mariadb
+      - ./db:/var/lib/mysql
     networks:
       - moodle-net
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   moodle:
-    image: bitnami/moodle:4.5
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: moodle-app
     restart: unless-stopped
     depends_on:
-      mariadb:
+      db:
         condition: service_healthy
     environment:
-      MOODLE_DATABASE_HOST: mariadb
-      MOODLE_DATABASE_PORT_NUMBER: 3306
-      MOODLE_DATABASE_USER: bn_moodle
-      MOODLE_DATABASE_NAME: bitnami_moodle
-      MOODLE_DATABASE_PASSWORD: ${DB_MOODLE_PASS}
-      MOODLE_SITE_NAME: "${MOODLE_SITE}"
-      MOODLE_USERNAME: ${MOODLE_ADMIN}
-      MOODLE_PASSWORD: ${MOODLE_ADMIN_PASS}
-      MOODLE_EMAIL: ${MOODLE_ADMIN_EMAIL}
-      MOODLE_HOST: ${MOODLE_HOST}
-      MOODLE_SKIP_BOOTSTRAP: "no"
-      PHP_MEMORY_LIMIT: 256M
-      PHP_MAX_EXECUTION_TIME: 300
-      PHP_POST_MAX_SIZE: 128M
-      PHP_UPLOAD_MAX_FILESIZE: 128M
+      MOODLE_DB_HOST: db
+      MOODLE_DB_NAME: moodle
+      MOODLE_DB_USER: moodleuser
+      MOODLE_DB_PASS: ${DB_MOODLE_PASS}
+      MOODLE_URL: https://${MOODLE_HOST}
+      MOODLE_SITE_NAME: ${MOODLE_SITE}
+      MOODLE_ADMIN: ${MOODLE_ADMIN}
+      MOODLE_ADMIN_PASS: ${MOODLE_ADMIN_PASS}
+      MOODLE_ADMIN_EMAIL: ${MOODLE_ADMIN_EMAIL}
     volumes:
-      - ./moodle:/bitnami/moodle
-      - ./moodledata:/bitnami/moodledata
+      - ./moodledata:/var/www/moodledata
     networks:
       - moodle-net
     ports:
-      - "127.0.0.1:8090:8080"
-      - "127.0.0.1:8493:8443"
-
-  redis:
-    image: redis:7-alpine
-    container_name: moodle-redis
-    restart: unless-stopped
-    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
-    volumes:
-      - ./redis:/data
-    networks:
-      - moodle-net
+      - "127.0.0.1:8090:80"
 
 networks:
   moodle-net:
-    driver: bridge
 DOCKEREOF
 
-# 替换变量
+# ---- 3. Moodle Dockerfile ----
+echo "[3] Creating Dockerfile..."
+cat > /opt/moodle/Dockerfile << 'DOCKEREOF'
+FROM php:8.2-apache
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libzip-dev libxml2-dev libpng-dev libjpeg-dev libfreetype6-dev \
+    libicu-dev libxslt-dev libldap2-dev cron wget unzip mariadb-client \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) zip xml intl mbstring curl gd soap opcache mysqli pgsql \
+    && a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN cd /var/www && \
+    wget -q https://download.moodle.org/download.php/direct/stable502/moodle-latest-502.tgz && \
+    tar xzf moodle-latest-502.tgz && \
+    rm moodle-latest-502.tgz && \
+    mkdir -p /var/www/moodledata && chmod 777 /var/www/moodledata && \
+    chown -R www-data:www-data /var/www/moodle
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+RUN { \
+    echo 'file_uploads = On'; \
+    echo 'memory_limit = 256M'; \
+    echo 'post_max_size = 128M'; \
+    echo 'upload_max_filesize = 128M'; \
+    echo 'max_execution_time = 300'; \
+    echo 'max_input_vars = 5000'; \
+} > /usr/local/etc/php/conf.d/moodle.ini
+
+RUN echo "<VirtualHost *:80>\n    DocumentRoot /var/www/moodle\n    <Directory /var/www/moodle>\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>" > /etc/apache2/sites-available/000-default.conf
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["apache2-foreground"]
+DOCKEREOF
+
+# ---- 4. Entrypoint (auto-install) ----
+echo "[4] Creating entrypoint script..."
+cat > /opt/moodle/entrypoint.sh << 'ENTRYEOF'
+#!/bin/bash
+set -e
+
+echo "Waiting for database..."
+until mysqladmin ping -h "$MOODLE_DB_HOST" --silent 2>/dev/null; do
+    sleep 2
+done
+
+cd /var/www/moodle
+
+# Auto-install if not already done
+if [ ! -f /var/www/moodledata/installed ]; then
+    echo "Installing Moodle..."
+    php admin/cli/install_database.php \
+        --lang=en \
+        --adminuser="$MOODLE_ADMIN" \
+        --adminpass="$MOODLE_ADMIN_PASS" \
+        --adminemail="$MOODLE_ADMIN_EMAIL" \
+        --agree-license \
+        --fullname="$MOODLE_SITE_NAME" \
+        --shortname="ACLAS" \
+        --wwwroot="$MOODLE_URL" \
+        --dbtype=mariadb \
+        --dbhost="$MOODLE_DB_HOST" \
+        --dbname="$MOODLE_DB_NAME" \
+        --dbuser="$MOODLE_DB_USER" \
+        --dbpass="$MOODLE_DB_PASS" 2>/dev/null || {
+        # If install_database fails, try install.php
+        php admin/cli/install.php \
+            --lang=en \
+            --adminuser="$MOODLE_ADMIN" \
+            --adminpass="$MOODLE_ADMIN_PASS" \
+            --adminemail="$MOODLE_ADMIN_EMAIL" \
+            --agree-license \
+            --fullname="$MOODLE_SITE_NAME" \
+            --shortname="ACLAS" \
+            --wwwroot="$MOODLE_URL" \
+            --dbtype=mariadb \
+            --dbhost="$MOODLE_DB_HOST" \
+            --dbname="$MOODLE_DB_NAME" \
+            --dbuser="$MOODLE_DB_USER" \
+            --dbpass="$MOODLE_DB_PASS" \
+            --dataroot=/var/www/moodledata \
+            --non-interactive
+    }
+    touch /var/www/moodledata/installed
+    echo "Moodle installed!"
+fi
+
+exec "$@"
+ENTRYEOF
+
+# Substitute passwords in compose file
 sed -i "s|\${DB_ROOT_PASS}|${DB_ROOT_PASS}|g" /opt/moodle/docker-compose.yml
 sed -i "s|\${DB_MOODLE_PASS}|${DB_MOODLE_PASS}|g" /opt/moodle/docker-compose.yml
+sed -i "s|\${MOODLE_HOST}|${MOODLE_HOST}|g" /opt/moodle/docker-compose.yml
 sed -i "s|\${MOODLE_SITE}|${MOODLE_SITE}|g" /opt/moodle/docker-compose.yml
 sed -i "s|\${MOODLE_ADMIN}|${MOODLE_ADMIN}|g" /opt/moodle/docker-compose.yml
 sed -i "s|\${MOODLE_ADMIN_PASS}|${MOODLE_ADMIN_PASS}|g" /opt/moodle/docker-compose.yml
 sed -i "s|\${MOODLE_ADMIN_EMAIL}|${MOODLE_ADMIN_EMAIL}|g" /opt/moodle/docker-compose.yml
-sed -i "s|\${MOODLE_HOST}|${MOODLE_HOST}|g" /opt/moodle/docker-compose.yml
 
-echo "  Done."
-
-# ---- 4. 启动容器 ----
-echo ""
-echo "[4/7] Starting containers (this takes 3-5 minutes on first run)..."
+# ---- 5. Build & Start ----
+echo "[5] Building Moodle image (3-5 min)..."
 cd /opt/moodle
+docker compose build --no-cache 2>&1 | tail -5
+echo "[6] Starting containers..."
 docker compose up -d
 
-echo "  Waiting for Moodle to be ready..."
-for i in $(seq 1 60); do
-    if curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8090 2>/dev/null | grep -q "200\|302\|303"; then
-        echo "  Moodle is ready! (took ${i}x5s)"
-        break
-    fi
-    echo -n "."
-    sleep 5
-done
-
-# ---- 5. Nginx + SSL ----
-echo ""
-echo "[5/7] Configuring Nginx + SSL..."
-cat > /etc/nginx/conf.d/learn.aclas.global.conf << 'NGINXEOF'
-server {
-    listen 80;
-    server_name learn.aclas.global;
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name learn.aclas.global;
-
-    ssl_certificate     /etc/letsencrypt/live/learn.aclas.global/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/learn.aclas.global/privkey.pem;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256;
-
-    client_max_body_size 128M;
-
-    location / {
-        proxy_pass http://127.0.0.1:8090;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto https;
-        proxy_buffering off;
-        proxy_read_timeout 300s;
-    }
-}
-NGINXEOF
-
-# 获取 SSL 证书 (先确保 Nginx 80 端口能通过防火墙)
-firewall-cmd --add-service=http --permanent 2>/dev/null || true
-firewall-cmd --add-service=https --permanent 2>/dev/null || true
-firewall-cmd --reload 2>/dev/null || true
-
-# 启动 Nginx 80 先（没有 SSL cert 的话）
-if [ ! -f /etc/letsencrypt/live/learn.aclas.global/fullchain.pem ]; then
-    # 临时配置仅 80 端口来通过 certbot 验证
-    cat > /etc/nginx/conf.d/learn.aclas.global.conf << 'NGINEXTMP'
-server {
-    listen 80;
-    server_name learn.aclas.global;
-    root /usr/share/nginx/html;
-}
-NGINEXTMP
-    
-    systemctl enable nginx 2>/dev/null || true
-    systemctl restart nginx 2>/dev/null || nginx
-    
-    certbot --nginx -d learn.aclas.global --non-interactive --agree-tos --email admin@aclas.global
-    
-    # 恢复完整配置
-    cat > /etc/nginx/conf.d/learn.aclas.global.conf << 'NGINXEOF'
-server {
-    listen 80;
-    server_name learn.aclas.global;
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name learn.aclas.global;
-
-    ssl_certificate     /etc/letsencrypt/live/learn.aclas.global/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/learn.aclas.global/privkey.pem;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256;
-
-    client_max_body_size 128M;
-
-    location / {
-        proxy_pass http://127.0.0.1:8090;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto https;
-        proxy_buffering off;
-        proxy_read_timeout 300s;
-    }
-}
-NGINXEOF
-fi
-
-# 重启 Nginx
-nginx -t && systemctl restart nginx 2>/dev/null || nginx -s reload
-echo "  Done."
-
-# ---- 6. 定时备份 ----
-echo ""
-echo "[6/7] Setting up daily backup cron..."
-cat > /opt/moodle/backup.sh << 'BACKUPEOF'
-#!/bin/bash
-BACKUP_DIR=/opt/moodle/backups
-mkdir -p $BACKUP_DIR
-DATE=$(date +%Y%m%d_%H%M)
-cd /opt/moodle
-docker compose exec -T mariadb mysqldump -u root --password="${DB_ROOT_PASS}" bitnami_moodle | gzip > "$BACKUP_DIR/moodle_db_$DATE.sql.gz"
-tar -czf "$BACKUP_DIR/moodledata_$DATE.tar.gz" -C /opt/moodle moodledata 2>/dev/null
-# 保留最近 7 天的备份
-find $BACKUP_DIR -type f -mtime +7 -delete
-BACKUPEOF
-sed -i "s|\${DB_ROOT_PASS}|${DB_ROOT_PASS}|g" /opt/moodle/backup.sh
-chmod +x /opt/moodle/backup.sh
-
-# 每天凌晨 3 点备份
-(crontab -l 2>/dev/null; echo "0 3 * * * /opt/moodle/backup.sh >> /var/log/moodle_backup.log 2>&1") | crontab -
-echo "  Done."
-
-# ---- 完成 ----
 echo ""
 echo "========================================"
-echo "  DEPLOYMENT COMPLETE!"
-echo "========================================"
-echo ""
-echo "  Moodle URL:  https://${MOODLE_HOST}"
-echo "  Admin user:  ${MOODLE_ADMIN}"
-echo "  Admin pass:  ${MOODLE_ADMIN_PASS}"
-echo ""
-echo "  ⚠️  Before accessing:"
-echo "     1. Add DNS A record in Cloudflare:"
-echo "        ${MOODLE_HOST}  →  192.129.159.23"
-echo "     2. Login and change the admin password"
+echo "  Moodle is starting up!"
+echo "  Check: https://${MOODLE_HOST}"
+echo "  Admin: ${MOODLE_ADMIN} / ${MOODLE_ADMIN_PASS}"
 echo "========================================"
