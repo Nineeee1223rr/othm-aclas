@@ -199,9 +199,10 @@ nav a.is-active { color: var(--white); }
   align-items: center;
   color: var(--white);
   padding: 92px 0;
+  --hero-image: url('assets/hero/index.jpg');
   background:
     linear-gradient(90deg, rgba(9, 45, 56, 0.95) 0%, rgba(9, 45, 56, 0.84) 43%, rgba(9, 45, 56, 0.34) 100%),
-    url('assets/hero-online-learning.jpg') center right / cover no-repeat,
+    var(--hero-image) center right / cover no-repeat,
     var(--primary-dark);
 }
 .hero .container { max-width: 1180px; }
@@ -669,7 +670,7 @@ footer a:hover { color: var(--primary); }
     padding: 70px 0;
     background:
       linear-gradient(90deg, rgba(9, 45, 56, 0.96) 0%, rgba(9, 45, 56, 0.88) 58%, rgba(9, 45, 56, 0.52) 100%),
-      url('assets/hero-online-learning.jpg') center right / cover no-repeat,
+      var(--hero-image) center right / cover no-repeat,
       var(--primary-dark);
   }
   .section,
@@ -770,3 +771,41 @@ footer a:hover { color: var(--primary); }
 .policy-card:hover .arrow {
   opacity: 1;
 }
+
+/* Page-specific hero images */
+.hero-index { --hero-image: url('assets/hero/index.jpg'); }
+.hero-about { --hero-image: url('assets/hero/about.jpg'); }
+.hero-courses { --hero-image: url('assets/hero/courses.jpg'); }
+.hero-level-3-business { --hero-image: url('assets/hero/level-3-business.jpg'); }
+.hero-level-4-5-business-management { --hero-image: url('assets/hero/level-4-5-business-management.jpg'); }
+.hero-level-6-business-management { --hero-image: url('assets/hero/level-6-business-management.jpg'); }
+.hero-level-7-strategic-management { --hero-image: url('assets/hero/level-7-strategic-management.jpg'); }
+.hero-level-4-5-health-social-care { --hero-image: url('assets/hero/level-4-5-health-social-care.jpg'); }
+.hero-level-4-5-information-technology { --hero-image: url('assets/hero/level-4-5-information-technology.jpg'); }
+.hero-how-it-works { --hero-image: url('assets/hero/how-it-works.jpg'); }
+.hero-university-progression { --hero-image: url('assets/hero/university-progression.jpg'); }
+.hero-testimonials { --hero-image: url('assets/hero/testimonials.jpg'); }
+.hero-blog { --hero-image: url('assets/hero/blog.jpg'); }
+.hero-contact { --hero-image: url('assets/hero/contact.jpg'); }
+.hero-faq { --hero-image: url('assets/hero/faq.jpg'); }
+.hero-policies { --hero-image: url('assets/hero/policies.jpg'); }
+.hero-assessment { --hero-image: url('assets/hero/assessment.jpg'); }
+.hero-appeals { --hero-image: url('assets/hero/appeals.jpg'); }
+.hero-complaints { --hero-image: url('assets/hero/complaints.jpg'); }
+.hero-conflicts-interest { --hero-image: url('assets/hero/conflicts-interest.jpg'); }
+.hero-cpd { --hero-image: url('assets/hero/cpd.jpg'); }
+.hero-data-protection { --hero-image: url('assets/hero/data-protection.jpg'); }
+.hero-diversity-equality { --hero-image: url('assets/hero/diversity-equality.jpg'); }
+.hero-document-storage { --hero-image: url('assets/hero/document-storage.jpg'); }
+.hero-health-safety { --hero-image: url('assets/hero/health-safety.jpg'); }
+.hero-iqa { --hero-image: url('assets/hero/iqa.jpg'); }
+.hero-malpractice { --hero-image: url('assets/hero/malpractice.jpg'); }
+.hero-privacy { --hero-image: url('assets/hero/privacy.jpg'); }
+.hero-quality-assurance-policy { --hero-image: url('assets/hero/quality-assurance-policy.jpg'); }
+.hero-reasonable-adjustment { --hero-image: url('assets/hero/reasonable-adjustment.jpg'); }
+.hero-refund-policy-detail { --hero-image: url('assets/hero/refund-policy-detail.jpg'); }
+.hero-refund { --hero-image: url('assets/hero/refund.jpg'); }
+.hero-rpl-detail { --hero-image: url('assets/hero/rpl-detail.jpg'); }
+.hero-safeguarding { --hero-image: url('assets/hero/safeguarding.jpg'); }
+.hero-terms { --hero-image: url('assets/hero/terms.jpg'); }
+.hero-blended-distance { --hero-image: url('assets/hero/blended-distance.jpg'); }
