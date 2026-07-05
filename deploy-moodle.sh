@@ -19,9 +19,25 @@ echo " ACLAS Moodle Deployment"
 echo " Site: ${MOODLE_HOST}"
 echo "========================================"
 
-# ---- 1. 清理旧环境 ----
+# ---- 1. 安装 Docker（如果没有） ----
 echo ""
-echo "[1/6] Cleaning old environment..."
+echo "[1/7] Installing Docker if needed..."
+if ! command -v docker &> /dev/null; then
+    apt-get update -qq && apt-get install -y -qq ca-certificates curl
+    install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    chmod a+r /etc/apt/keyrings/docker.asc
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+    apt-get update -qq && apt-get install -y -qq docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    systemctl enable docker --now
+    echo "  Docker installed."
+else
+    echo "  Docker already installed."
+fi
+
+# ---- 2. 清理旧环境 ----
+echo ""
+echo "[2/7] Cleaning old environment..."
 docker stop $(docker ps -aq) 2>/dev/null || true
 docker rm $(docker ps -aq) 2>/dev/null || true
 docker system prune -af 2>/dev/null || true
@@ -37,7 +53,7 @@ echo "  Done."
 
 # ---- 3. Docker Compose ----
 echo ""
-echo "[3/6] Writing docker-compose.yml..."
+echo "[3/7] Writing docker-compose.yml..."
 cat > /opt/moodle/docker-compose.yml << 'DOCKEREOF'
 version: '3.8'
 
@@ -121,7 +137,7 @@ echo "  Done."
 
 # ---- 4. 启动容器 ----
 echo ""
-echo "[4/6] Starting containers (this takes 3-5 minutes on first run)..."
+echo "[4/7] Starting containers (this takes 3-5 minutes on first run)..."
 cd /opt/moodle
 docker compose up -d
 
@@ -137,7 +153,7 @@ done
 
 # ---- 5. Nginx + SSL ----
 echo ""
-echo "[5/6] Configuring Nginx + SSL..."
+echo "[5/7] Configuring Nginx + SSL..."
 cat > /etc/nginx/conf.d/learn.aclas.global.conf << 'NGINXEOF'
 server {
     listen 80;
@@ -227,7 +243,7 @@ echo "  Done."
 
 # ---- 6. 定时备份 ----
 echo ""
-echo "[6/6] Setting up daily backup cron..."
+echo "[6/7] Setting up daily backup cron..."
 cat > /opt/moodle/backup.sh << 'BACKUPEOF'
 #!/bin/bash
 BACKUP_DIR=/opt/moodle/backups
