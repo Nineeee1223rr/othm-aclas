@@ -201,7 +201,7 @@ nav a.is-active { color: var(--white); }
   padding: 92px 0;
   background:
     linear-gradient(90deg, rgba(9, 45, 56, 0.95) 0%, rgba(9, 45, 56, 0.84) 43%, rgba(9, 45, 56, 0.34) 100%),
-    url('assets/hero-online-learning.png') center right / cover no-repeat,
+    url('assets/hero-online-learning.jpg') center right / cover no-repeat,
     var(--primary-dark);
 }
 .hero .container { max-width: 1180px; }
@@ -350,6 +350,7 @@ main > section:not(.hero):not(.section):not(.cta):not(.cta-section) {
   background: linear-gradient(135deg, rgba(0, 75, 94, 0.22), rgba(183, 121, 31, 0.18));
   padding: 1px;
   border-radius: var(--radius-lg);
+  overflow: hidden;
   transition: transform .25s ease, box-shadow .25s ease;
 }
 .card-outer:hover {
@@ -373,6 +374,52 @@ main > section:not(.hero):not(.section):not(.cta):not(.cta-section) {
 .card-inner p { color: var(--ink-light); font-size: 17px; margin-bottom: 0; }
 .card-inner a { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; }
 .card-inner a:hover { text-decoration-color: currentColor; }
+
+.image-card .card-inner {
+  min-height: auto;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  padding-top: 26px;
+}
+.card-media {
+  width: 100%;
+  height: 188px;
+  object-fit: cover;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.section-head-with-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 34px;
+  align-items: end;
+  margin-bottom: 34px;
+}
+.section-head-with-media .intro {
+  margin-bottom: 0;
+}
+.section-head-with-media img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.content-with-photo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+  gap: 38px;
+  align-items: center;
+  max-width: 1080px;
+}
+.content-with-photo .content {
+  max-width: none;
+}
+.content-photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
 
 .mission {
   font-size: 22px;
@@ -622,7 +669,7 @@ footer a:hover { color: var(--primary); }
     padding: 70px 0;
     background:
       linear-gradient(90deg, rgba(9, 45, 56, 0.96) 0%, rgba(9, 45, 56, 0.88) 58%, rgba(9, 45, 56, 0.52) 100%),
-      url('assets/hero-online-learning.png') center right / cover no-repeat,
+      url('assets/hero-online-learning.jpg') center right / cover no-repeat,
       var(--primary-dark);
   }
   .section,
@@ -636,6 +683,8 @@ footer a:hover { color: var(--primary); }
   .bento .wide-4,
   .bento .full { grid-column: span 12; }
   .contact-grid { grid-template-columns: 1fr; }
+  .section-head-with-media { grid-template-columns: 1fr; align-items: start; }
+  .content-with-photo { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 30px; }
   .footer-bottom {
     flex-direction: column;
