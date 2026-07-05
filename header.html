@@ -1,0 +1,38 @@
+<!-- ACLAS Global — Shared Header (loaded by all pages) -->
+<div class="banner">OTHM accreditation in progress. Programmes are prospective and subject to approval.</div>
+<header>
+  <div class="container">
+    <a href="/" class="logo"><img src="/assets/logo.png" alt="ACLAS Global International Education Group" height="40"></a>
+    <button class="menu-toggle" onclick="document.getElementById('mainNav').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+    <nav id="mainNav">
+      <a href="/courses.html">Programmes</a>
+      <a href="/how-it-works.html">How It Works</a>
+      <a href="/university-progression.html">Progression</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html" class="nav-btn">Enquire</a>
+    </nav>
+  </div>
+</header>
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.feat, .card-outer, .quote, .section h2').forEach(el => {
+    el.classList.add('reveal'); observer.observe(el);
+  });
+});
+</script>
+<!-- Cookie Consent -->
+<div id="cookie-consent" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:16px 20px;z-index:9999;box-shadow:0 -4px 20px rgba(0,0,0,.08);font-size:14px">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <p style="margin:0;color:var(--ink);max-width:700px">We use essential cookies to ensure the website functions properly. By continuing to browse, you agree to our <a href="/privacy.html" style="text-decoration:underline">Privacy Policy</a>.</p>
+    <div style="display:flex;gap:8px;flex-shrink:0">
+      <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookie-consent','accepted')" style="background:var(--primary);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius);font-weight:600;cursor:pointer;font-size:14px">Accept</button>
+      <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookie-consent','declined')" style="background:transparent;border:1px solid var(--border);padding:10px 24px;border-radius:var(--radius);font-weight:600;cursor:pointer;font-size:14px;color:var(--ink-light)">Decline</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){if(!localStorage.getItem('cookie-consent')){document.getElementById('cookie-consent').style.display='block';}})();
+</script>

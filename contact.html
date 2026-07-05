@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact ACLAS Global - Get in Touch</title>
+
+<meta property="og:title" content="Contact ACLAS Global - Get in Touch">
+<meta property="og:description" content="Questions about OTHM qualifications? Contact ACLAS Global in Atlanta, Georgia. Email, phone, or complete our enquiry form. We respond within 1 working day.">
+<meta property="og:url" content="https://aclas.global/contact">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ACLAS Global International Education Group">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://aclas.global/assets/aclas-logo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact ACLAS Global - Get in Touch">
+<meta name="twitter:description" content="Questions about OTHM qualifications? Contact ACLAS Global in Atlanta, Georgia. Email, phone, or complete our enquiry form. We respond within 1 working day.">
+<meta name="twitter:image" content="https://aclas.global/assets/aclas-logo.png">
+<link rel="canonical" href="https://aclas.global/contact">
+
+<meta name="description" content="Questions about OTHM qualifications? Contact ACLAS Global in Atlanta, Georgia. Email, phone, or complete our enquiry form. We respond within 1 working day.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<section class="hero"><div class="container"><p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Contact</p>
+<h1>Contact Us</h1><p>Whether you are ready to enrol, exploring your options, or have a question - we are here to help.</p></div></section>
+
+<section class="section"><div class="container"><div class="contact-grid">
+<div><h2>Send Us a Message</h2><form data-static-form>
+<div class="form-group"><label for="first-name">First Name *</label><input id="first-name" name="first_name" type="text" autocomplete="given-name" required></div>
+<div class="form-group"><label for="last-name">Last Name *</label><input id="last-name" name="last_name" type="text" autocomplete="family-name" required></div>
+<div class="form-group"><label for="email">Email Address *</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+<div class="form-group"><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+<div class="form-group"><label for="country">Country of Residence</label><input id="country" name="country" type="text" autocomplete="country-name"></div>
+<div class="form-group"><label for="interest">I am interested in...</label><select id="interest" name="interest"><option value="" selected>Select...</option><option>Level 3</option><option>Level 4 &amp; 5</option><option>Level 6</option><option>Level 7</option><option>Not sure - please advise</option></select></div>
+<div class="form-group"><label for="programme">Subject / Programme (optional)</label><input id="programme" name="programme" type="text" placeholder="e.g. Level 7 Diploma in Strategic Management"></div>
+<div class="form-group"><label for="message">Your Message *</label><textarea id="message" name="message" required></textarea></div>
+<button type="submit" class="btn btn-primary" style="width:100%;font-size:1rem">Send Enquiry</button>
+</form></div>
+<div><h2>Reach Us Directly</h2>
+<div class="card"><p><strong>Email</strong><br>info@aclas.global</p></div>
+<div class="card" style="margin-top:12px"><p><strong>Office Hours</strong><br>Monday-Friday, 9:00 AM - 5:00 PM (ET)</p></div>
+</div>
+</div></div></section>
+
+<div class="cta"><div class="container"><h2>Prefer Quick Answers?</h2><p>Many common questions are answered in our FAQ.</p><a href="faq.html" class="btn btn-primary" style="font-size:1rem;padding:14px 36px">View FAQ</a></div></div>
+</main>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const [h, f] = await Promise.all([
+    fetch("/header.html").then(r => r.text()),
+    fetch("/footer.html").then(r => r.text())
+  ]);
+  document.body.insertAdjacentHTML("afterbegin", h);
+  document.body.insertAdjacentHTML("beforeend", f);
+});
+</script>
+</body>
+</html>
