@@ -90,8 +90,8 @@ services:
     networks:
       - moodle-net
     ports:
-      - "127.0.0.1:8080:8080"
-      - "127.0.0.1:8443:8443"
+      - "127.0.0.1:8090:8080"
+      - "127.0.0.1:8493:8443"
 
   redis:
     image: redis:7-alpine
@@ -127,7 +127,7 @@ docker compose up -d
 
 echo "  Waiting for Moodle to be ready..."
 for i in $(seq 1 60); do
-    if curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8080 2>/dev/null | grep -q "200\|302\|303"; then
+    if curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8090 2>/dev/null | grep -q "200\|302\|303"; then
         echo "  Moodle is ready! (took ${i}x5s)"
         break
     fi
@@ -157,7 +157,7 @@ server {
     client_max_body_size 128M;
 
     location / {
-        proxy_pass http://127.0.0.1:8080;
+        proxy_pass http://127.0.0.1:8090;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -209,7 +209,7 @@ server {
     client_max_body_size 128M;
 
     location / {
-        proxy_pass http://127.0.0.1:8080;
+        proxy_pass http://127.0.0.1:8090;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
