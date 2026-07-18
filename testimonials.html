@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What Learners Can Expect | ACLAS Global</title>
@@ -27,10 +24,38 @@
 <link rel="canonical" href="https://aclas.global/testimonials">
 
 <meta name="description" content="What you can expect when you study an OTHM qualification online with ACLAS Global International Education Group.">
+<link rel="preload" as="image" href="/assets/hero/testimonials.jpg" fetchpriority="high">
 <link rel="stylesheet" href="style.css">
+<script src="/site.js" defer></script>
 </head>
 <body>
-<main>
+<!-- ACLAS Global — Shared Header (loaded by all pages) -->
+<div class="banner">OTHM accreditation in progress. Programmes are prospective and subject to approval.</div>
+<header>
+  <div class="container">
+    <a href="/" class="logo"><img src="/assets/logo-header.png" alt="ACLAS Global International Education Group" width="115" height="44" decoding="async" fetchpriority="high"></a>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-controls="mainNav" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav id="mainNav">
+      <a href="/courses.html">Programmes</a>
+      <a href="/how-it-works.html">How It Works</a>
+      <a href="/university-progression.html">Progression</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html" class="nav-btn">Enquire</a>
+    </nav>
+  </div>
+</header>
+<!-- Cookie Consent -->
+<div id="cookie-consent" class="cookie-consent" hidden>
+  <div class="cookie-consent__inner">
+    <p>We use essential cookies to ensure the website functions properly. By continuing to browse, you agree to our <a href="/privacy.html">Privacy Policy</a>.</p>
+    <div class="cookie-consent__actions">
+      <button type="button" class="cookie-consent__accept" data-cookie-choice="accepted">Accept</button>
+      <button type="button" class="cookie-consent__decline" data-cookie-choice="declined">Decline</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
 <section class="hero hero-testimonials"><div class="container"><p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; What Learners Can Expect</p>
 <h1>What Learners Can Expect</h1><p class="hero-sub">A transparent guide to the learner experience at ACLAS Global International Education Group.</p></div></section>
 
@@ -39,7 +64,7 @@
 <h2>Your Learning Environment</h2>
 <p>At ACLAS Global, every learner studies through <strong>Moodle</strong> — the world's most widely used open-source learning platform, trusted by universities and organisations globally. You will have 24/7 access to your course materials, assignments, grades, and Tutor communication from any device.</p>
 </div>
-<img class="content-photo" src="assets/photos/learner-experience.jpg" alt="Learner studying online with notes and a laptop">
+<img class="content-photo" src="assets/photos/learner-experience.jpg" alt="Learner studying online with notes and a laptop" loading="lazy" decoding="async">
 </div></section>
 
 <section><div class="container content">
@@ -77,15 +102,43 @@
 <p style="margin-top:32px;color:var(--mid)"><em>As a candidate centre preparing for OTHM approval, we are building our learner community. We look forward to sharing authentic learner experiences once our first cohort has completed their programmes.</em></p>
 </div></section>
 </main>
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const [h, f] = await Promise.all([
-    fetch("/header.html").then(r => r.text()),
-    fetch("/footer.html").then(r => r.text())
-  ]);
-  document.body.insertAdjacentHTML("afterbegin", h);
-  document.body.insertAdjacentHTML("beforeend", f);
-});
-</script>
+<!-- ACLAS Global - Shared Footer (loaded by all pages) -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="/"><img src="/assets/aclas-logo-footer.png" alt="ACLAS Global" width="127" height="48" loading="lazy" decoding="async"></a>
+        <p style="font-size:0.9rem;max-width:320px">OTHM candidate centre preparing to deliver UK-accredited qualifications online.</p>
+      </div>
+      <div>
+        <h4>Programmes</h4>
+        <a href="/courses.html">Level 3 Foundation</a>
+        <a href="/courses.html">Level 4 &amp; 5 Undergraduate</a>
+        <a href="/courses.html">Level 6 Graduate</a>
+        <a href="/courses.html">Level 7 Postgraduate</a>
+      </div>
+      <div>
+        <h4>Information</h4>
+        <a href="/about.html">About</a>
+        <a href="/how-it-works.html">How It Works</a>
+        <a href="/university-progression.html">Progression</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms &amp; Conditions</a>
+        <a href="/refund.html">Refund Policy</a>
+        <a href="/policies.html">All Policies</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ACLAS Global International Education Group</span>
+      <span>8735 Dunwoody Place, Suite R, Atlanta, GA 30350</span>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

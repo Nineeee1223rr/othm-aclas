@@ -1,6 +1,4 @@
 /* ACLAS Global — static website design system */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700;900&display=swap');
-
 :root {
   --bg: #ffffff;
   --surface: #ffffff;
@@ -28,7 +26,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body {
-  font-family: 'Lato', Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   line-height: 1.6;
   color: var(--ink);
@@ -41,7 +39,7 @@ p { margin-bottom: 16px; }
 address { font-style: normal; color: var(--ink-light); line-height: 1.7; }
 
 h1, h2, h3, h4 {
-  font-family: 'Lato', Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 800;
   color: var(--primary);
   line-height: 1.18;
@@ -598,6 +596,11 @@ footer a {
   font-size: 16px;
 }
 footer a:hover { color: var(--primary); }
+footer img {
+  height: 48px;
+  width: auto;
+  margin-bottom: 14px;
+}
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -623,6 +626,60 @@ footer a:hover { color: var(--primary); }
 .js-enabled .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.cookie-consent {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 16px 20px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  font-size: 14px;
+}
+.cookie-consent[hidden] { display: none; }
+.cookie-consent__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.cookie-consent p {
+  margin: 0;
+  color: var(--ink);
+  max-width: 700px;
+}
+.cookie-consent a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cookie-consent__actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.cookie-consent button {
+  border-radius: var(--radius);
+  padding: 10px 24px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+}
+.cookie-consent__accept {
+  background: var(--primary);
+  color: var(--white);
+  border: 1px solid var(--primary);
+}
+.cookie-consent__decline {
+  background: transparent;
+  color: var(--ink-light);
+  border: 1px solid var(--border);
 }
 
 @media (max-width: 980px) {
