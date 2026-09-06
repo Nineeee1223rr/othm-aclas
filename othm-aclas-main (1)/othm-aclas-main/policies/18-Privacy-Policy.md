@@ -16,7 +16,7 @@ This policy applies to all learners, prospective learners, staff, website visito
 ## 2. Who We Are
 
 **Data Controller:** ACLAS Global International Education Group
-**Registered Address:** 8735 Dunwoody Place, Suite R, Atlanta, GA 30350, USA
+**Registered Address:** 1401 Pennsylvania Ave, Suite 105, Wilmington, DE 19806, USA
 **Contact:** privacy@aclas.global
 **Website:** https://aclas.global
 
@@ -171,7 +171,7 @@ We keep this Privacy Policy under regular review. The latest version is always a
 For any questions about this Privacy Policy or to exercise your data protection rights:
 
 - **Email:** privacy@aclas.global
-- **Post:** Data Protection Officer, ACLAS Global International Education Group, 8735 Dunwoody Place, Suite R, Atlanta, GA 30350, USA
+- **Post:** Data Protection Officer, ACLAS Global International Education Group, 1401 Pennsylvania Ave, Suite 105, Wilmington, DE 19806, USA
 - **Phone:** [Insert Centre Phone Number]
 
 ---

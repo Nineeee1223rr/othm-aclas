@@ -70,7 +70,7 @@ Learners are expected to:
 
 ## 5. Physical Premises
 
-The Centre's principal office is located at **8735 Dunwoody Place, Suite R, Atlanta, GA 30350, USA**.
+The Centre's principal office is located at **1401 Pennsylvania Ave, Suite 105, Wilmington, DE 19806, USA**.
 
 ### 5.1 Fire Safety
 

@@ -60,7 +60,7 @@ Where a different period is required by applicable law, the longer period applie
 
 ## 4. Storage — Physical Documents
 
-- Physical documents are stored in locked filing cabinets in the Centre's office at 8735 Dunwoody Place, Suite R, Atlanta, GA 30350.
+- Physical documents are stored in locked filing cabinets in the Centre's office at 1401 Pennsylvania Ave, Suite 105, Wilmington, DE 19806.
 - The office is secured when unoccupied.
 - Access to learner and staff files is restricted to authorised personnel.
 - Documents are protected from fire, water, and environmental damage to the extent reasonably practicable.
