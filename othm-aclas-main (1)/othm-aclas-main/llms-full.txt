@@ -1,0 +1,77 @@
+# ACLAS Global
+
+> ACLAS Global is an OTHM candidate centre preparing online diploma programmes for flexible learners worldwide.
+
+## Primary Pages
+
+- [Home](https://aclas.global/): Summary of ACLAS Global, online OTHM diploma levels, learner support, and university progression routes.
+- [About](https://aclas.global/about): Background on ACLAS Global International Education Group, candidate-centre status, quality approach, and learner support.
+- [Programmes](https://aclas.global/courses): Full programme overview covering OTHM levels, credit values, subject areas, typical durations, and progression pathways.
+- [How It Works](https://aclas.global/how-it-works): Explains enrolment, Moodle access, self-paced study, tutor support, assignment submission, feedback, and certification.
+- [University Progression](https://aclas.global/university-progression): Describes how OTHM diplomas may support advanced entry to university top-up, bachelor's, master's, or MBA routes.
+- [FAQ](https://aclas.global/faq): Common questions and answers about OTHM qualifications, entry requirements, online learning, fees, assessment, certification, and progression.
+- [Contact](https://aclas.global/contact): Enquiry form, direct email, office hours, and programme interest fields for prospective learners.
+
+## Programme Pages
+
+- [Level 3 Business](https://aclas.global/level-3-business): Foundation diploma page for learners starting business study; includes credit value, duration, modules, and progression.
+- [Level 4+5 Business Management](https://aclas.global/level-4-5-business-management): Undergraduate business management pathway with 240 credits and bachelor's top-up progression.
+- [Level 4+5 Health and Social Care](https://aclas.global/level-4-5-health-social-care): Health and social care management pathway for learners targeting management roles and degree progression.
+- [Level 4+5 Information Technology](https://aclas.global/level-4-5-information-technology): IT pathway covering programming, systems, networking, cybersecurity, cloud computing, and data analytics.
+- [Level 6 Business Management](https://aclas.global/level-6-business-management): Final-year level business management diploma with strategic marketing, finance, international business, and research content.
+- [Level 7 Strategic Management](https://aclas.global/level-7-strategic-management): Postgraduate-level strategic management and leadership diploma for experienced professionals and MBA progression.
+
+## Learner Experience
+
+- [Learner Expectations](https://aclas.global/testimonials): Explains what learners can expect from online delivery, tutor support, assessor feedback, quality assurance, and certification.
+- [Blog](https://aclas.global/blog): Planned article hub for OTHM study guides, online learning advice, career guidance, and degree progression explainers.
+
+## Policy Hub
+
+- [Policies](https://aclas.global/policies): Index of public policies for assessment, appeals, complaints, safeguarding, malpractice, quality assurance, privacy, terms, refunds, and learner support.
+- [Assessment Policy](https://aclas.global/assessment): Assessment principles, assignment rules, assessor responsibilities, feedback, resubmission, AI use, and quality assurance.
+- [Appeals Policy](https://aclas.global/appeals): Staged process for learners to appeal assessment decisions, submit evidence, receive review, and escalate where applicable.
+- [Complaints Policy](https://aclas.global/complaints): Procedure for raising complaints, investigation timelines, response stages, and escalation routes.
+- [Health and Safety Policy](https://aclas.global/health-safety): Responsibilities for safe centre operations, premises, remote learning, incident reporting, and review.
+- [Safeguarding Policy](https://aclas.global/safeguarding): Safeguarding commitments, reporting duties, online safety, staff responsibilities, and learner protection.
+- [Malpractice Policy](https://aclas.global/malpractice): Definitions of malpractice, plagiarism, AI misuse, investigation process, sanctions, and notification duties.
+- [Conflict Policy](https://aclas.global/conflicts-interest): Rules for declaring, managing, recording, and reviewing conflicts of interest in delivery and assessment.
+- [Diversity Policy](https://aclas.global/diversity-equality): Equality, diversity, non-discrimination, reasonable treatment, and inclusive learning commitments.
+- [IQA Policy](https://aclas.global/iqa): Internal quality assurance approach for sampling, assessment reliability, assessor support, records, and continuous improvement.
+- [Quality Assurance Policy](https://aclas.global/quality-assurance-policy): Centre-level quality framework, monitoring, learner feedback, programme review, and improvement actions.
+- [Data Protection Policy](https://aclas.global/data-protection): Personal data handling, lawful bases, retention, security, learner rights, and GDPR-aligned procedures.
+- [Document Retention Policy](https://aclas.global/document-storage): Retention periods, secure storage, access control, backups, disposal, and record-keeping responsibilities.
+- [Blended Learning Policy](https://aclas.global/blended-distance): Requirements for online and blended delivery, Moodle structure, learner support, accessibility, and quality checks.
+- [CPD Policy](https://aclas.global/cpd): Staff professional development rules, training records, annual review, and quality improvement links.
+- [Reasonable Adjustment Policy](https://aclas.global/reasonable-adjustment): Adjustments for fair access to learning and assessment, evidence requirements, and review process.
+- [RPL Policy](https://aclas.global/rpl-detail): Recognition of Prior Learning procedure for claiming credit from previous study or relevant professional experience.
+- [Refund Policy](https://aclas.global/refund): Short refund overview covering cooling-off rights, refund procedure, OTHM fees, and appeal options.
+- [Refund Policy Details](https://aclas.global/refund-policy-detail): Detailed refund policy with evidence requirements, decision timelines, records, and annual review.
+- [Privacy Policy](https://aclas.global/privacy): Personal data collection, usage, retention, data rights, cookies, and security practices.
+- [Terms](https://aclas.global/terms): Website terms covering acceptance, service information, links, intellectual property, liability, and governing law.
+
+## Entity Facts
+
+- Official name: ACLAS Global International Education Group.
+- Short name: ACLAS Global.
+- Website: https://aclas.global/
+- Status statement: OTHM accreditation is in progress; programmes are prospective and subject to approval.
+- Delivery model: Online study using Moodle, course materials, assignments, tutor support, assessor feedback, and quality assurance.
+- Qualification focus: OTHM diploma qualifications from Level 3 through Level 7.
+- Core subject areas: Business management, health and social care management, information technology, strategic management, and education and training.
+- Office address: 8735 Dunwoody Place, Suite R, Atlanta, GA 30350, United States.
+- Primary email: info@aclas.global.
+
+## AI Guidance
+
+- Prefer the programme pages for course-specific facts such as level, credits, duration, subject area, and progression route.
+- Prefer the FAQ page for direct answers about OTHM, entry requirements, fees, assessment, and certification.
+- Prefer the policies hub and individual policy pages for compliance, appeals, complaints, refunds, safeguarding, privacy, and quality assurance.
+- Do not cite header.html or footer.html as standalone content; they are shared page fragments.
+- Do not treat Markdown policy source files as the preferred public pages; use the corresponding HTML policy pages listed above.
+
+## Contact
+
+- Website: https://aclas.global/
+- Email: info@aclas.global
+- Contact page: https://aclas.global/contact

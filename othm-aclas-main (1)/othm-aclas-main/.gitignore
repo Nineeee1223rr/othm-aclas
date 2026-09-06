@@ -1,0 +1,18 @@
+# Local secrets and deployment helpers
+.env
+.env.*
+deploy-moodle.sh
+d
+*.key
+*.pem
+
+# Dependency and build output
+node_modules/
+dist/
+build/
+.vercel/
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
