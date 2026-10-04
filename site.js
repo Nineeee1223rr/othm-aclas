@@ -36,6 +36,14 @@
     });
   }
 
+  function getCookieConsent() {
+    try {
+      return localStorage.getItem('cookie-consent');
+    } catch (error) {
+      return null;
+    }
+  }
+
   function initCookieConsent() {
     var consent = document.getElementById('cookie-consent');
     if (!consent) return;
@@ -56,6 +64,21 @@
         localStorage.setItem('cookie-consent', button.getAttribute('data-cookie-choice'));
       } catch (error) {}
       consent.hidden = true;
+      initAnalytics(); // start analytics if the visitor just accepted
+    });
+  }
+
+  function initCookieSettings() {
+    var link = document.getElementById('cookie-settings');
+    var consent = document.getElementById('cookie-consent');
+    if (!link || !consent) return;
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      try {
+        localStorage.removeItem('cookie-consent');
+      } catch (error) {}
+      consent.hidden = false;
+      consent.scrollIntoView({ block: 'end' });
     });
   }
 
@@ -158,8 +181,12 @@
    * ------------------------------------------------------------------ */
   var GA_MEASUREMENT_ID = 'G-ZLF83C17VS';
 
+  var analyticsLoaded = false;
+
   function initAnalytics() {
-    if (!GA_MEASUREMENT_ID) return;
+    if (!GA_MEASUREMENT_ID || analyticsLoaded) return;
+    if (getCookieConsent() !== 'accepted') return; // respect decline / no choice yet
+    analyticsLoaded = true;
     var s = document.createElement('script');
     s.async = true;
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_MEASUREMENT_ID);
@@ -173,6 +200,7 @@
   initMenu();
   initReveal();
   initCookieConsent();
+  initCookieSettings();
   initStaticForm();
   initAnalytics();
 })();

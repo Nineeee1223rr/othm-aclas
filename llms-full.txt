@@ -9,6 +9,7 @@
 - [Programmes](https://aclas.global/courses): Full programme overview covering OTHM levels, credit values, subject areas, typical durations, and progression pathways.
 - [How It Works](https://aclas.global/how-it-works): Explains enrolment, Moodle access, self-paced study, tutor support, assignment submission, feedback, and certification.
 - [University Progression](https://aclas.global/university-progression): Describes how OTHM diplomas may support advanced entry to university top-up, bachelor's, master's, or MBA routes.
+- [Recognition](https://aclas.global/recognition): Explains OTHM/Ofqual/RQF regulation, the RQF level-equivalence table, how to verify on the Ofqual register, and ACLAS Global's candidate-centre status.
 - [FAQ](https://aclas.global/faq): Common questions and answers about OTHM qualifications, entry requirements, online learning, fees, assessment, certification, and progression.
 - [Contact](https://aclas.global/contact): Enquiry form, direct email, office hours, and programme interest fields for prospective learners.
 
