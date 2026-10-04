@@ -141,7 +141,7 @@
    * Set GA_MEASUREMENT_ID to your GA4 ID (e.g. 'G-XXXXXXXXXX') to enable.
    * Left empty, no analytics script is loaded.
    * ------------------------------------------------------------------ */
-  var GA_MEASUREMENT_ID = '';
+  var GA_MEASUREMENT_ID = 'G-ZLF83C17VS';
 
   function initAnalytics() {
     if (!GA_MEASUREMENT_ID) return;
