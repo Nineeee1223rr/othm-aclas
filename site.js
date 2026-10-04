@@ -60,13 +60,14 @@
   }
 
   /* ------------------------------------------------------------------
-   * Contact form
-   * Set FORM_ENDPOINT to a form-backend URL (e.g. a Formspree endpoint
-   * like 'https://formspree.io/f/your-id') to POST enquiries as JSON.
-   * When left empty, the form falls back to opening the visitor's email
-   * app with a pre-filled message to FORM_TO.
+   * Contact form (Web3Forms)
+   * FORM_ENDPOINT + FORM_ACCESS_KEY drive direct POST submissions.
+   * The access key is a *public* key per Web3Forms docs — safe to ship
+   * in client-side code. When FORM_ENDPOINT is empty, the form falls back
+   * to opening the visitor's email app with a pre-filled message to FORM_TO.
    * ------------------------------------------------------------------ */
-  var FORM_ENDPOINT = '';
+  var FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+  var FORM_ACCESS_KEY = '5d251189-ca78-4e06-a4f6-ac32afc88f5e';
   var FORM_TO = 'info@aclas.global';
 
   function initStaticForm() {
@@ -90,7 +91,9 @@
       var btn = form.querySelector('[type="submit"]');
       var data = {};
       Array.prototype.forEach.call(form.elements, function (el) {
-        if (el.name && !el.disabled && el.type !== 'submit') data[el.name] = el.value;
+        if (!el.name || el.disabled || el.type === 'submit') return;
+        if ((el.type === 'checkbox' || el.type === 'radio') && !el.checked) return;
+        data[el.name] = el.value;
       });
 
       function finish(ok, message) {
@@ -102,12 +105,24 @@
       if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
 
       if (FORM_ENDPOINT) {
+        var payload = {};
+        for (var key in data) {
+          if (Object.prototype.hasOwnProperty.call(data, key)) payload[key] = data[key];
+        }
+        if (FORM_ACCESS_KEY) payload.access_key = FORM_ACCESS_KEY;
+        payload.from_name = ((data.first_name || '') + ' ' + (data.last_name || '')).trim() || 'Website visitor';
+        payload.subject = 'Website enquiry' + (data.interest ? ' - ' + data.interest : '') + ' | ACLAS Global';
         fetch(FORM_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(data)
+          body: JSON.stringify(payload)
         }).then(function (resp) {
-          if (resp.ok) {
+          return resp.json().then(
+            function (json) { return { ok: resp.ok, json: json }; },
+            function () { return { ok: resp.ok, json: null }; }
+          );
+        }).then(function (result) {
+          if (result.ok && (!result.json || result.json.success !== false)) {
             finish(true, 'Thank you - your enquiry has been sent. We will reply within 2 working days.');
           } else {
             finish(false, 'Sorry, something went wrong. Please email us directly at ' + FORM_TO + '.');
