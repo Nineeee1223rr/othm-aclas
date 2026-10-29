@@ -21,7 +21,6 @@ Disallow: /header.html
 Disallow: /footer.html
 Disallow: /policies/
 Disallow: /deploy-moodle.sh
-Disallow: /d
 
 User-agent: *
 Allow: /
@@ -29,6 +28,5 @@ Disallow: /header.html
 Disallow: /footer.html
 Disallow: /policies/
 Disallow: /deploy-moodle.sh
-Disallow: /d
 
 Sitemap: https://aclas.global/sitemap.xml
